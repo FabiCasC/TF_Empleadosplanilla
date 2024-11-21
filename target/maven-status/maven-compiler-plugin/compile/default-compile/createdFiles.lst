@@ -1,0 +1,4 @@
+backend\datos\Empleado.class
+frontend\VentanaPrincipal.class
+backend\logica\Calculos.class
+com\mycompany\tf_empleadosplanilla\TF_Empleadosplanilla.class
