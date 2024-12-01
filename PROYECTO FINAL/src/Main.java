@@ -4,7 +4,7 @@ import java.util.Random;
 class Empleado {
     // Atributos
     private final String dni;
-    private final String nombreCompleto;    
+    private final String nombreCompleto;
     private final int edad;
     private final double sueldoBasico;
     private final String seguro;
@@ -59,21 +59,26 @@ class Planilla {
     public void inicializarDatos() {
         Random random = new Random();
         List<String> nombresDisponibles = new ArrayList<>(List.of(
-                "Carlos", "María", "Juan", "Ana", "Luis", "Sofía", "Pedro", "Lucía", "Miguel", "Clara"
+                "Carlos", "María", "Juan", "Ana", "Luis", "Sofía", "Pedro", "Lucía",
+                "Miguel", "Clara", "Javier", "Valeria", "Andrés", "Camila", "Ricardo",
+                "Daniela", "Felipe", "Mariana", "Diego", "Alejandra"
         ));
         List<String> apellidosDisponibles = new ArrayList<>(List.of(
-                "García", "Martínez", "Rodríguez", "López", "González", "Pérez", "Fernández", "Chávez", "Vargas", "Rojas"
+                "García", "Martínez", "Rodríguez", "López", "González", "Pérez",
+                "Fernández", "Chávez", "Vargas", "Rojas", "Torres", "Castro",
+                "Flores", "Reyes", "Herrera", "Ramos", "Romero", "Cruz",
+                "Morales", "Ortega"
         ));
-        while (!nombresDisponibles.isEmpty() && empleados.size() < 10) {
+        while (!nombresDisponibles.isEmpty() && !apellidosDisponibles.isEmpty() && empleados.size() < 20) {
             String nombre = nombresDisponibles.remove(random.nextInt(nombresDisponibles.size()));
-            String apellido = apellidosDisponibles.get(random.nextInt(apellidosDisponibles.size()));
+            String apellido = apellidosDisponibles.remove(random.nextInt(apellidosDisponibles.size()));
             String nombreCompleto = nombre + " " + apellido;
             String dni = String.format("%08d", random.nextInt(100000000));
-            int edad = random.nextInt(43) + 18;
-            double sueldoBasico = 1000 + (2000 * random.nextDouble());
+            int edad = random.nextInt(43) + 18; // Edad entre 18 y 60
+            double sueldoBasico = 1000 + (2000 * random.nextDouble()); // Sueldo básico entre 1000 y 3000
             String seguro = random.nextBoolean() ? "AFP" : "SNP";
-            int horasExtras = random.nextInt(11);
-            int tardanzas = random.nextInt(121);
+            int horasExtras = random.nextInt(11); // Horas extras entre 0 y 10
+            int tardanzas = random.nextInt(121); // Tardanzas entre 0 y 120 minutos
             empleados.add(new Empleado(dni, nombreCompleto, edad, sueldoBasico, seguro, horasExtras, tardanzas));
         }
     }
@@ -108,8 +113,23 @@ class Planilla {
         return suma / empleados.size();
     }
     public void mostrarListaCompleta() {
+        // Imprimir encabezados
+        System.out.printf("%-10s %-25s %-5s %-12s %-8s %-12s %-10s %-12s\n",
+                "DNI", "Nombre Completo", "Edad", "Sueldo Básico", "Seguro",
+                "Horas Extras", "Tardanzas", "Sueldo Final");
+        System.out.println("=".repeat(100)); // Separador
+
+        // Imprimir cada empleado
         for (Empleado empleado : empleados) {
-            System.out.println(empleado);
+            System.out.printf("%-10s %-25s %-5d %-12.2f %-8s %-12d %-10d %-12.2f\n",
+                    empleado.getDni(),
+                    empleado.getNombreCompleto(),
+                    empleado.getEdad(),
+                    empleado.getSueldoBasico(),
+                    empleado.getSeguro(),
+                    empleado.getHorasExtras(),
+                    empleado.getTardanzas(),
+                    empleado.getSueldoFinal());
         }
     }
 }
